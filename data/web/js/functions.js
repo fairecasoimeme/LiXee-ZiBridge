@@ -111,11 +111,11 @@ function scanNetwork()
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 ){
 			leselect = xhr.responseText;
-			const datas = leselect.split(';');
+			const datas = leselect.split('|');
 			if (parseInt(datas[0])>=0)
 			{
-				
 				document.getElementById("networks").innerHTML=datas[1];
+
 			}else{
 				scanNetwork();
 			}

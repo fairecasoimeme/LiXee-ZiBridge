@@ -221,7 +221,7 @@ bool loadConfigSerial() {
 
 void setupWifiAP()
 {
-  WiFi.mode(WIFI_AP);
+  WiFi.mode(WIFI_AP_STA);
   WiFi.disconnect();
   
   uint8_t mac[WL_MAC_ADDR_LENGTH];

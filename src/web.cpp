@@ -815,7 +815,7 @@ void handleScanNetwork(AsyncWebServerRequest * request)
         }
         result += "</select>";
     }  
-    request->send(200, F("text/html"), String(n)+";"+result);
+    request->send(200, F("text/html"), String(n)+"|"+result);
 }
 void handleClearConsole(AsyncWebServerRequest * request)
 {
