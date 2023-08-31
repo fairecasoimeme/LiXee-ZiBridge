@@ -1,5 +1,5 @@
 # LiXee-ZiBridge
-Zigbee bridge for ESP32
+Zigbee bridge for ESP32 chip
 
 ## Compatibility
 This application can be used with :  
@@ -21,5 +21,14 @@ You can :
 * Supervise dialog with your zigbee coordinator
 * Superviser connexion state
 
-  
+## Changelog
 
+### V1.6
+* Fix Wifi network scan
+* Fix AsyncTCP capacity
+* Fix mDNS problem to be compatible with ZeroConf home-assistant
+* Change name of the project
+* Convert arduino IDE source to PlatformIo environment
+
+### V1.5a
+* Initial source from [ZiGate-Ethernet](https://github.com/fairecasoimeme/ZiGate-Ethernet)
