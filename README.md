@@ -3,7 +3,7 @@ Zigbee bridge for ESP32 chip
 
 ## Compatibility
 This application can be used with :  
-* LiXee-ZiWifi32  (WiFi only)
+* [LiXee-ZiWifi32](https://lixee.fr/produits/41-lixee-ziwifi32-3770014375162.html)  (WiFi only)
     * The zigbee radio is a ZiGate.  
 * LiXee-Ethernet32  (WiFi / Ethernet)
     * The zigbee radio can be : ZiGate, ZNP, Conbee or EZSP.
