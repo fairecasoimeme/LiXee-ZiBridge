@@ -1,4 +1,279 @@
-/* navbar-fixed-left */
+/* ===== Form inputs ===== */
+input {
+  background: #f1f1f1;
+  border: 0;
+  padding: 0 15px
+}
+
+#file-input {
+  padding: 0;
+  border: 1px solid #ddd;
+  line-height: 44px;
+  text-align: left;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  height: 44px;
+  border-radius: 4px;
+  margin: 10px auto;
+  font-size: 15px
+}
+
+/* ===== Progress bar ===== */
+#bar, #prgbar {
+  background-color: #f1f1f1;
+  border-radius: 10px
+}
+
+#bar {
+  background-color: #17a2b8;
+  width: 0%;
+  height: 10px
+}
+
+form#upload_form {
+  background: #fff;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left
+}
+
+/* ===== Page title ===== */
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e9ecef;
+}
+.page-title .title-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.page-title .title-icon svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+.page-title h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* ===== Shared card/icon styles (tools, status, etc.) ===== */
+.tools-section { margin-bottom: 30px; }
+.tools-section h6 {
+  text-transform: uppercase;
+  color: #6c757d;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.tool-card {
+  display: inline-block;
+  width: 140px;
+  text-align: center;
+  padding: 18px 10px;
+  margin: 6px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  text-decoration: none;
+  color: #333;
+  transition: box-shadow .2s;
+  vertical-align: top;
+}
+.tool-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,.13);
+  text-decoration: none;
+  color: #333;
+}
+.tool-card .tool-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+}
+.tool-card .tool-icon svg {
+  width: 28px !important;
+  height: 28px !important;
+}
+.tool-card .tool-name { font-weight: 600; font-size: 14px; }
+.tool-card .tool-desc { font-size: 11px; color: #999; margin-top: 2px; }
+
+/* ===== Icon color variants ===== */
+.icon-blue { background: #e8f4fd; }
+.icon-blue > svg { color: #0d6efd; }
+.icon-green { background: #e6f9f0; }
+.icon-green > svg { color: #198754; }
+.icon-purple { background: #f0e8fd; }
+.icon-purple > svg { color: #6f42c1; }
+.icon-cyan { background: #e3fafc; }
+.icon-cyan > svg { color: #0dcaf0; }
+.icon-pink { background: #fde8ee; }
+.icon-pink > svg { color: #dc3545; }
+.icon-orange { background: #fff3e0; }
+.icon-orange > svg { color: #fd7e14; }
+.icon-teal { background: #e0f7f6; }
+.icon-teal > svg { color: #20c997; }
+.icon-indigo { background: #e8e0fd; }
+.icon-indigo > svg { color: #6610f2; }
+
+/* ===== Modern card ===== */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  border: none;
+  margin-bottom: 15px;
+}
+.card .card-header {
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  font-weight: 600;
+  border-radius: 12px 12px 0 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+}
+.card .card-header .card-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.card .card-header .card-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+.card .card-body {
+  padding: 16px;
+}
+
+/* ===== Config form styling ===== */
+.config-form .form-group {
+  margin-bottom: 16px;
+}
+.config-form label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.config-form .form-control {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding: 8px 12px;
+}
+.config-form .form-check {
+  margin-bottom: 12px;
+}
+
+/* ===== Navbar SVG icons ===== */
+.nav-link svg, .dropdown-item svg {
+  width: 18px !important;
+  height: 18px !important;
+  margin-right: 5px;
+  vertical-align: text-bottom;
+}
+
+/* ===== Button SVG icons ===== */
+.btn svg {
+  width: 16px !important;
+  height: 16px !important;
+  vertical-align: text-bottom;
+}
+
+/* ===== Console textarea ===== */
+.console-area {
+  background: #1e1e1e;
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  border-radius: 8px;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  resize: vertical;
+}
+
+/* ===== Action buttons row ===== */
+.action-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.action-btns .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+}
+
+/* ===== File list ===== */
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.file-list li {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.file-list li:last-child {
+  border-bottom: none;
+}
+.file-list li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+.file-list li a:hover {
+  color: #0d6efd;
+}
+.file-list li > svg {
+  width: 18px !important;
+  height: 18px !important;
+  color: #6c757d;
+  flex-shrink: 0;
+}
+.file-list li .file-size {
+  font-size: 12px;
+  color: #999;
+  margin-left: auto;
+}
+
+/* ===== Content wrapper ===== */
+.content-wrapper {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ===== Status table ===== */
+.table-sm td { padding: 4px 8px; }
+
+/* ===== navbar-fixed-left (FSBrowser) ===== */
 
 @media (max-width: 767px) {
   .navbar-text {
@@ -11,16 +286,10 @@
 
 .navbar-fixed-left {
     padding-top: 10px;
-    width: 250px;
+    padding-left: 5px;
     position: fixed;
     border-radius: 0;
     z-index: 1029;
-	border-right : 1px dashed gray;
-    /*
-    font-family: verdana;
-    font-size: 12px;
-    font-weight: 200;
-    */
 }
 
 .navbar-fixed-left .navbar-nav {
@@ -29,15 +298,15 @@
 }
 
 .navbar-fixed-left .navbar-nav > li {
-    float: none;  /* Cancel default li float: left */
-    width: 250px;
+    float: none;
+    width: 100%;
 }
 
 .navbar-fixed-left .navbar-nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
     line-height: 20px;
-} 
+}
 
 .navbar-fixed-left .navbar-nav > li > .dropdown-menu {
     margin-top: -30px;
@@ -49,11 +318,6 @@
     float: left;
     background-color: #fff;
     min-width: 160px;
-    /*
-    padding: 5px 0;
-    margin: 2px 0 0;
-    */
-
     border: 1px solid #ccc;
     border: 1px solid rgba(0, 0, 0, .15);
     border-width: 0 1px 1px;
@@ -62,32 +326,23 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
 
-
-
-/* set default padding container */
 .navbar-fixed-left + .container,
 .navbar-fixed-left + .container-fluid {
-    padding-left: 280px;
+    padding-left: 350px;
 }
-
 
 .app-main-content {
     padding-top: 0px;
 }
 
-
-
 @media (max-width: 767px) {
     .navbar-fixed-left {
         width: 60px;
-
     }
-
     .navbar-fixed-left + .container,
     .navbar-fixed-left + .container-fluid {
         padding-left: 80px;
     }
-
     .navbar-fixed-left .navbar-nav > li {
         width: 59px;
     }
@@ -96,10 +351,6 @@
         margin-left: 50px;
     }
 }
-
-
-
-/* navbar-fixed dropdown */
 
 @media (max-width: 767px) {
   .navbar-fixed-left .navbar-nav .open .dropdown-menu > li > a {
@@ -121,5 +372,4 @@
   .navbar-fixed-left .navbar-nav .open .dropdown-menu > .disabled > a:focus {
     color: #777;
   }
-
 }
