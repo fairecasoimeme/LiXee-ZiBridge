@@ -13,34 +13,21 @@
 
 #include <driver/uart.h>
 #include <lwip/ip_addr.h>
+#include <esp_task_wdt.h>
 
 
-#include <ETH.h>
-/*#ifdef ETH_CLK_MODE
-#undef ETH_CLK_MODE
-#endif*/
-
-/*#ifdef ETHERV1
-#define ETH_CLK_MODE    ETH_CLOCK_GPIO17_OUT
-#define ETH_POWER_PIN   -1
-#endif */
-
-//#ifdef ETHERV2
-#define ETH_CLK_MODE    ETH_CLOCK_GPIO0_IN
-#define ETH_POWER_PIN   5
-//#endif 
-
-// Type of the Ethernet PHY (LAN8720 or TLK110)
-#define ETH_TYPE        ETH_PHY_LAN8720
-
-// I²C-address of Ethernet PHY (0 or 1 for LAN8720, 31 for TLK110)
-#define ETH_ADDR       1
-
-// Pin# of the I²C clock signal for the Ethernet PHY
-#define ETH_MDC_PIN     23
-
-// Pin# of the I²C IO signal for the Ethernet PHY
-#define ETH_MDIO_PIN    18
+#ifndef ESP32S3
+  #include <ETH.h>
+  #ifdef ETH_CLK_MODE
+  #undef ETH_CLK_MODE
+  #endif
+  #define ETH_CLK_MODE    ETH_CLOCK_GPIO0_IN
+  #define ETH_POWER_PIN   5
+  #define ETH_TYPE        ETH_PHY_LAN8720
+  #define ETH_ADDR        1
+  #define ETH_MDC_PIN     23
+  #define ETH_MDIO_PIN    18
+#endif
 
 #define FORMAT_LittleFS_IF_FAILED true
 #define CONFIG_LITTLEFS_CACHE_SIZE 512
@@ -67,11 +54,11 @@ String macID;
 
 SET_LOOP_TASK_STACK_SIZE(16*1024); // 16KB
 
+#ifndef ESP32S3
 void WiFiEvent(WiFiEvent_t event) {
   switch (event) {
     case ARDUINO_EVENT_ETH_START:
       DEBUG_PRINTLN(F("ETH Started"));
-      //set eth hostname here
       ETH.setHostname("esp32-ethernet");
       break;
     case ARDUINO_EVENT_ETH_CONNECTED:
@@ -103,6 +90,7 @@ void WiFiEvent(WiFiEvent_t event) {
       break;
   }
 }
+#endif
 
 WiFiServer server(TCP_LISTEN_PORT);
 
@@ -249,9 +237,9 @@ void setupWifiAP()
 }
 
 bool setupSTAWifi() {
-  
-  WiFi.mode(WIFI_STA);
-  DEBUG_PRINTLN(F("WiFi.mode(WIFI_STA)"));
+
+  WiFi.mode(WIFI_AP_STA);
+  DEBUG_PRINTLN(F("WiFi.mode(WIFI_AP_STA)"));
   WiFi.disconnect();
   DEBUG_PRINTLN(F("disconnect"));
   delay(100);
@@ -286,10 +274,11 @@ void setup(void)
  
   Serial.begin(115200);
   DEBUG_PRINTLN(F("Start"));
-  //Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);
-  
+
+#ifndef ESP32S3
   WiFi.onEvent(WiFiEvent);
   ETH.begin(ETH_ADDR, ETH_POWER_PIN, ETH_MDC_PIN, ETH_MDIO_PIN, ETH_TYPE, ETH_CLK_MODE);
+#endif
   
   
   if (!LittleFS.begin(FORMAT_LittleFS_IF_FAILED, "/lfs2",10)) {
@@ -315,8 +304,8 @@ void setup(void)
         DEBUG_PRINTLN(F("Mode USB only"));
         Serial.end();
       }else{
-        Serial2.begin(ConfigSettings.serialSpeed, SERIAL_8N1, RXD2, TXD2);
-        //Serial2.begin(ConfigSettings.serialSpeed);
+        ZiGateSerial.begin(ConfigSettings.serialSpeed, SERIAL_8N1, RXD2, TXD2);
+        //ZiGateSerial.begin(ConfigSettings.serialSpeed);
         DEBUG_PRINTLN(F("Mode Prod"));
       }
     }
@@ -324,30 +313,51 @@ void setup(void)
      DEBUG_PRINTLN(F("Mode Flash"));
   }
 */ 
+#ifdef ESP32S3
+  // Sur ESP32-S3 (ZiWiFi32), WiFi est toujours nécessaire (pas d'Ethernet)
+  if (configOK)
+  {
+    DEBUG_PRINTLN(F("configOK"));
+    if (!ConfigSettings.enableWiFi || !setupSTAWifi())
+    {
+       DEBUG_PRINTLN(F("AP"));
+      setupWifiAP();
+      modeWiFi="AP";
+    }
+     DEBUG_PRINTLN(F("setupSTAWifi"));
+  }else{
+    setupWifiAP();
+    modeWiFi="AP";
+    DEBUG_PRINTLN(F("AP"));
+  }
+#else
   if (ConfigSettings.enableWiFi)
   {
     if (configOK)
     {
-      DEBUG_PRINTLN(F("configOK"));  
+      DEBUG_PRINTLN(F("configOK"));
       if (!setupSTAWifi())
       {
          DEBUG_PRINTLN(F("AP"));
         setupWifiAP();
         modeWiFi="AP";
       }
-       DEBUG_PRINTLN(F("setupSTAWifi"));   
+       DEBUG_PRINTLN(F("setupSTAWifi"));
     }else{
-      
+
       setupWifiAP();
       modeWiFi="AP";
       DEBUG_PRINTLN(F("AP"));
     }
   }
+#endif
   
+#ifndef ESP32S3
   if (!ConfigSettings.dhcp)
   {
     ETH.config(parse_ip_address(ConfigSettings.ipAddress), parse_ip_address(ConfigSettings.ipGW),parse_ip_address(ConfigSettings.ipMask));
   }
+#endif
 
   
 
@@ -380,7 +390,7 @@ void setup(void)
 
 //GetVersion
  /* uint8_t cmdVersion[10]={0x01,0x02,0x10,0x10,0x02,0x10,0x02,0x10,0x10,0x03};
-  Serial2.write(cmdVersion,10);*/
+  ZiGateSerial.write(cmdVersion,10);*/
 }
 
 String hexToDec(String hexString) {
@@ -407,6 +417,13 @@ double loopCount;
 
 void loop(void)
 {
+  esp_task_wdt_reset();
+
+  if (needReboot) {
+    delay(500);
+    esp_restart();
+  }
+
   size_t bytes_read;
   uint8_t net_buf[BUFFER_SIZE];
   uint8_t serial_buf[BUFFER_SIZE];
@@ -445,16 +462,16 @@ void loop(void)
       cmd[8]=0x10;
       cmd[9]=0x03;
     
-      Serial2.write(cmd,10);
-      Serial2.flush();     
+      ZiGateSerial.write(cmd,10);
+      ZiGateSerial.flush();     
     }
     loopCount=0; 
   }
   // Check if a client has connected
   if (!client) {
     // eat any bytes in the swSer buffer as there is nothing to see them
-    while(Serial2.available()) {
-      Serial2.read();
+    while(ZiGateSerial.available()) {
+      ZiGateSerial.read();
       
     }
       
@@ -473,7 +490,7 @@ void loop(void)
         //DEBUG_PRINT("Buff count : ");
         //DEBUG_PRINTLN(count);
         bytes_read = client.read(net_buf, min(count, BUFFER_SIZE));
-        Serial2.write(net_buf, bytes_read);         
+        ZiGateSerial.write(net_buf, bytes_read);         
         
         if (bytes_read>0)
         {
@@ -500,7 +517,7 @@ void loop(void)
           logPush('\n');
       
         }
-        Serial2.flush();
+        ZiGateSerial.flush();
       }
       
     } else {
@@ -510,9 +527,9 @@ void loop(void)
       bytes_read = 0;
       bool buffOK=false;
       
-      while(Serial2.available() && bytes_read < BUFFER_SIZE) {
+      while(ZiGateSerial.available() && bytes_read < BUFFER_SIZE) {
         buffOK=true;
-        serial_buf[bytes_read] = Serial2.read();
+        serial_buf[bytes_read] = ZiGateSerial.read();
         bytes_read++;
         
       }
