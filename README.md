@@ -33,12 +33,8 @@ Just install esptools and run this command
 ![status](https://github.com/fairecasoimeme/LiXee-ZiBridge/blob/master/screenshots/ZiBridge_status.JPG)  
 ## Config
 ![status](https://github.com/fairecasoimeme/LiXee-ZiBridge/blob/master/screenshots/ZiBridge_config_general.JPG)  
-## Zigbee
-![status](https://github.com/fairecasoimeme/LiXee-ZiBridge/blob/master/screenshots/ZiBridge_config_zigbee.JPG)  
 ## WiFi
 ![wifi](https://github.com/fairecasoimeme/LiXee-ZiBridge/blob/master/screenshots/ZiBridge_config_Wifi.JPG)
-## Ethernet
-![Ethernet](https://github.com/fairecasoimeme/LiXee-ZiBridge/blob/master/screenshots/ZiBridge_ethernet.JPG)
 ## Console
 ![console](https://github.com/fairecasoimeme/LiXee-ZiBridge/blob/master/screenshots/ZiBridge_consolel.JPG)
 
